@@ -1,0 +1,49 @@
+'''
+def LPS(i,j):#Recursive approach to find the length of the Longest Palindromic Subsequence
+	if i>j:
+		return 0
+	if i==j:
+		return 1
+	if a[i]==a[j]:
+		return LPS(i+1,j-1)+2
+	else:
+		return max(LPS(i+1,j),LPS(i,j-1))
+'''
+def LPSdp():#dp approach to find the length of Longest Palindromic Subsequence.Also prints the subsequence.
+	memo=[[0 for i in range(len(a))] for j in range(len(a))]
+	for i in range(len(a)):
+		memo[i][i]=1
+	for c in range(1,len(a)):
+		f=0
+		g=c
+		for d in range(len(a)-c):
+			if a[f]==a[g]:
+				memo[f][g]=memo[f+1][g-1]+2
+			else:
+				memo[f][g]=max(memo[f+1][g],memo[f][g-1])
+			f+=1
+			g+=1
+	subs=[0 for i in range(memo[0][len(a)-1])]#generating the LPS
+	i=0
+	j=memo[0][len(a)-1]-1
+	i1=0
+	j1=len(a)-1
+	while i<=j:
+		if a[i1]==a[j1]:
+			subs[i]=a[i1]
+			subs[j]=a[i1]
+			i1-=1
+			j1-=1
+			i+=1
+			j-=1
+		else:
+			if memo[i1][j1-1]>memo[i1][j1+1]:
+				j1-=1
+			else:
+				i1+=1
+	print("the longest palindromic subsequence is : {}".format("".join(subs)))
+	return memo[0][len(a)-1]
+
+a=input("Enter the sequence\n")
+print("The length of the longest palindromic subsequence is {}".format(LPSdp()))
+#print("The length of the longest palindromic subsequence is {}".format(LPS(0,(len(a)-1))))
