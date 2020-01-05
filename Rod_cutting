@@ -1,0 +1,8 @@
+#Maximum length of the entered Rod can be 8. 
+n=int(input("Enter the length of the rod\n"))
+price=[1,5,8,9,10,17,17,20]
+maxprice=[0 for i in range(9)]
+for i in range(1,n+1):
+	for j in range(i):
+		maxprice[i]=max(maxprice[i],price[j]+maxprice[i-j-1])
+print("Maximum price at optimal cut is : {}".format(maxprice[n]))
