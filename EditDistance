@@ -1,0 +1,15 @@
+s1=input("Enter the first string\n")
+s2=input("Enter the second string\n")
+memo=[[0 for i in range(len(s1)+1)] for y in range(len(s2)+1)]
+for x in range(1,len(s1)+1):
+    memo[0][x]=x
+for x in range(1,len(s2)+1):
+    memo[x][0]=x
+for i in range(1,len(s2)+1):
+    for j in range(1,len(s1)+1):
+        if s1[j-1]==s2[i-1]:
+            memo[i][j]=memo[i-1][j-1]
+        else:
+            memo[i][j]=min(memo[i-1][j],memo[i][j-1],memo[i-1][j-1])+1
+print("The least no. of insert/delete/replace operations to equalize the strings are: {}".format(memo[len(s2)][len(s1)]))
+    
